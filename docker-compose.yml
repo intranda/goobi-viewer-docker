@@ -1,0 +1,101 @@
+version: "3.4"
+
+services:
+  solr:
+    image: intranda/goobi-viewer-solr
+    volumes:
+      - type: bind
+        source: ${SOLR_DATA_DIR}
+        target: /var/solr
+      - type: bind
+        source: ./solr/goobiviewer
+        target: /opt/goobiviewer
+    ports:
+      - 127.0.0.1:8983:8983
+    environment:
+      - ZK_HOST=zookeeper:2181
+      - SOLR_HEAP=2048m
+      - GC_TUNE=-XX:SurvivorRatio=4 -XX:TargetSurvivorRatio=90 -XX:MaxTenuringThreshold=8 -XX:+UseConcMarkSweepGC -XX:ConcGCThreads=4 -XX:ParallelGCThreads=4 -XX:+CMSScavengeBeforeRemark -XX:PretenureSizeThreshold=64m -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=50 -XX:CMSMaxAbortablePrecleanTime=6000 -XX:+CMSParallelRemarkEnabled -XX:+ParallelRefProcEnabled
+      - SOLR_LOG_LEVEL=ERROR
+    depends_on:
+      - zookeeper
+    restart: unless-stopped
+
+  zookeeper:
+    image: zookeeper:3.6.3
+    volumes:
+      - type: bind
+        source: ${ZOOKEEPER_DATA_DIR}
+        target: /data
+      - type: bind
+        source: ${ZOOKEEPER_DATALOG_DIR}
+        target: /datalog
+    restart: unless-stopped
+
+  viewer:
+    image: ${VIEWER_IMAGE}
+    environment:
+      DB_USER: ${DB_VIEWER_USER}
+      DB_PASSWORD: ${DB_VIEWER_PASSWORD}
+      VIEWER_DOMAIN: ${VIEWER_DOMAIN}
+    ports:
+      - 127.0.0.1:8080:8080
+    depends_on:
+      - viewer-db
+      - solr
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ${VIEWER_DIR}
+        target: /opt/digiverso/viewer
+
+  viewer-db:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_VIEWER_DATABASE}
+      MYSQL_USER: ${DB_VIEWER_USER}
+      MYSQL_PASSWORD: ${DB_VIEWER_PASSWORD}
+    volumes:
+      - type: bind
+        source: ${DB_DATA_DIR}
+        target: /var/lib/mysql
+    ports:
+      - 127.0.0.1:3306:3306
+    restart: unless-stopped
+
+  indexer:
+    image: intranda/goobi-viewer-indexer:develop
+    depends_on:
+      - solr
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ${VIEWER_DIR}
+        target: /opt/digiverso/viewer/
+# uncomment to use a custom indexer config
+      # - type: bind
+      #   source: ./data/myindexerconfig.xml
+      #   target: /opt/digiverso/indexer/solr_indexerconfig.xml
+      #   read_only: true
+
+  connector:
+    image:  intranda/goobi-viewer-connector:develop
+    environment:
+      VIEWER_DOMAIN: ${VIEWER_DOMAIN}
+    depends_on:
+      - solr
+      - viewer
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ${CONNECTOR_TOKEN_DIR}
+        target: /opt/digiverso/viewer/oai/token
+
+  proxy:
+    image: intranda/goobi-viewer-proxy
+    environment:
+      SERVERNAME: ${VIEWER_DOMAIN}
+    ports:
+      - 80:80
+    restart: unless-stopped
