@@ -96,6 +96,8 @@ services:
     image: intranda/goobi-viewer-proxy
     environment:
       SERVERNAME: ${VIEWER_DOMAIN}
+      # SITEMAP_LOCATION: https://${VIEWER_DOMAIN}/viewer/sitemap_index.xml # uncomment to set Sitemap in robots.txt
+
     ports:
       - 80:80
     restart: unless-stopped
