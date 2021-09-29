@@ -75,7 +75,7 @@ services:
         target: /opt/digiverso/viewer/
 
   connector:
-    image:  intranda/goobi-viewer-connector:develop
+    image: intranda/goobi-viewer-connector:develop
     environment:
       VIEWER_DOMAIN: ${VIEWER_DOMAIN}
     depends_on:
