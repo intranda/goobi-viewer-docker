@@ -73,11 +73,6 @@ services:
       - type: bind
         source: ${VIEWER_DIR}
         target: /opt/digiverso/viewer/
-# uncomment to use a custom indexer config
-      # - type: bind
-      #   source: ${INDEXER_CONFIG}
-      #   target: /opt/digiverso/indexer/solr_indexerconfig.xml
-      #   read_only: true
 
   connector:
     image:  intranda/goobi-viewer-connector:develop

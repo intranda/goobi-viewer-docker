@@ -1,0 +1,9 @@
+version: "3.4"
+
+services:
+  indexer:
+    volumes:
+      - type: bind
+        source: ${INDEXER_CONFIG}
+        target: /opt/digiverso/indexer/solr_indexerconfig.xml
+        read_only: true
