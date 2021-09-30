@@ -6,4 +6,6 @@ services:
       - type: bind
         source: ${INDEXER_CONFIG}
         target: /opt/digiverso/indexer/solr_indexerconfig.xml
-        read_only: true
+   proxy:
+    environment:
+      SITEMAP_LOCATION: https://${VIEWER_DOMAIN}/viewer/sitemap_index.xml
