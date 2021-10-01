@@ -10,8 +10,6 @@ services:
       - type: bind
         source: ./solr/goobiviewer
         target: /opt/goobiviewer
-    ports:
-      - 127.0.0.1:8983:8983
     environment:
       - ZK_HOST=zookeeper:2181
       - SOLR_HEAP=2048m
@@ -38,8 +36,6 @@ services:
       DB_USER: ${DB_VIEWER_USER}
       DB_PASSWORD: ${DB_VIEWER_PASSWORD}
       VIEWER_DOMAIN: ${VIEWER_DOMAIN}
-    ports:
-      - 127.0.0.1:8080:8080
     depends_on:
       - viewer-db
       - solr
