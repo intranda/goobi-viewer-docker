@@ -13,3 +13,9 @@ services:
       #   Require ip 10.10.10.10 # allow access from IP 10.10.10.10
       # USE_MOD_REMOTEIP: 1 # this enables mod_remoteip (possibly needed if using a reverse proxy)
       # REMOTEIP_INTERNAL_PROXY: 172.23.0.254 # IP address of the external reverse proxy
+    # Example configuration for making a directory available via the web server:
+    # volumes:
+    #   - type: bind
+    #     source: /opt/digiverso/additional_web_dir/
+    #     target: /var/www/additional_web_dir/
+    #     read_only: true
