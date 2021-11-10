@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   solr:
-    image: intranda/goobi-viewer-solr
+    image: intranda/goobi-viewer-docker-solr
     volumes:
       - type: bind
         source: ${SOLR_DATA_DIR}
