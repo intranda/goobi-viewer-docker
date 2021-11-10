@@ -84,7 +84,7 @@ services:
         target: /opt/digiverso/viewer/oai/token
 
   proxy:
-    image: intranda/goobi-viewer-proxy
+    image: intranda/goobi-viewer-docker-proxy
     environment:
       SERVERNAME: ${VIEWER_DOMAIN}
     ports:
