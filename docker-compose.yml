@@ -44,6 +44,9 @@ services:
       - type: bind
         source: ${VIEWER_DIR}
         target: /opt/digiverso/viewer
+      - type: bind
+        source: ${VIEWER_LOGDIR}
+        target: /opt/digiverso/logs/
 
   viewer-db:
     image: mariadb:10.5
@@ -69,6 +72,9 @@ services:
       - type: bind
         source: ${VIEWER_DIR}
         target: /opt/digiverso/viewer/
+      - type: bind
+        source: ${VIEWER_LOGDIR}
+        target: /opt/digiverso/logs/
 
   proxy:
     image: intranda/goobi-viewer-docker-proxy
