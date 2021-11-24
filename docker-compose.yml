@@ -70,19 +70,6 @@ services:
         source: ${VIEWER_DIR}
         target: /opt/digiverso/viewer/
 
-  connector:
-    image: intranda/goobi-viewer-connector:develop
-    environment:
-      VIEWER_DOMAIN: ${VIEWER_DOMAIN}
-    depends_on:
-      - solr
-      - viewer
-    restart: unless-stopped
-    volumes:
-      - type: bind
-        source: ${CONNECTOR_TOKEN_DIR}
-        target: /opt/digiverso/viewer/oai/token
-
   proxy:
     image: intranda/goobi-viewer-docker-proxy
     environment:
