@@ -64,7 +64,7 @@ services:
     restart: unless-stopped
 
   indexer:
-    image: intranda/goobi-viewer-indexer:develop
+    image: intranda/goobi-viewer-indexer
     depends_on:
       - solr
     restart: unless-stopped
