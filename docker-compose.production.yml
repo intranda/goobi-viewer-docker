@@ -5,7 +5,7 @@ services:
     volumes:
       - type: bind
         source: ${INDEXER_CONFIG}
-        target: /opt/digiverso/indexer/solr_indexerconfig.xml
+        target: /opt/digiverso/indexer/config_indexer.xml
   proxy:
     environment:
       SITEMAP_LOCATION: https://${VIEWER_DOMAIN}/viewer/sitemap_index.xml
