@@ -15,6 +15,7 @@ services:
       - SOLR_HEAP=2048m
       - GC_TUNE=-XX:SurvivorRatio=4 -XX:TargetSurvivorRatio=90 -XX:MaxTenuringThreshold=8 -XX:+UseConcMarkSweepGC -XX:ConcGCThreads=4 -XX:ParallelGCThreads=4 -XX:+CMSScavengeBeforeRemark -XX:PretenureSizeThreshold=64m -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=50 -XX:CMSMaxAbortablePrecleanTime=6000 -XX:+CMSParallelRemarkEnabled -XX:+ParallelRefProcEnabled
       - SOLR_LOG_LEVEL=ERROR
+      # for further configuration check documentation of official Solr docker image
     depends_on:
       - zookeeper
     restart: unless-stopped
@@ -36,6 +37,9 @@ services:
       DB_USER: ${DB_VIEWER_USER}
       DB_PASSWORD: ${DB_VIEWER_PASSWORD}
       VIEWER_DOMAIN: ${VIEWER_DOMAIN}
+      # DB_SERVER: viewer-db
+      # DB_PORT: 3306
+      # SOLR_URL: http://solr:8983/solr/collection1
     depends_on:
       - viewer-db
       - solr
@@ -65,6 +69,9 @@ services:
 
   indexer:
     image: intranda/goobi-viewer-indexer
+    # environment:
+    #   SOLR_URL:  http://solr:8983/solr/collection1
+    #   VIEWER_URL: http://viewer:8080/viewer
     depends_on:
       - solr
     restart: unless-stopped
@@ -80,6 +87,20 @@ services:
     image: intranda/goobi-viewer-docker-proxy
     environment:
       SERVERNAME: ${VIEWER_DOMAIN}
+      # HTTPD_PORT: 80
+      # SERVERADMIN: support@intranda.com
+      # REMOTEIP_HEADER: X-Forwarded-For
+      # REMOTEIP_INTERNAL_PROXY: ""
+      # USE_MOD_REMOTEIP: 0
+      # SITEMAP_LOCATION: ""
+      # VIEWER_HTTP_PORT: 8080
+      # VIEWER_AJP_PORT: 8009
+      # VIEWER_PATH: /viewer
+      # VIEWER_CONTAINER: viewer
+      # SOLR_PORT: 8983
+      # SOLR_PATH: /solr
+      # SOLR_CONTAINER: solr
+      # SOLR_INCLUDES: "Require all denied"
     ports:
       - 80:80
     restart: unless-stopped
