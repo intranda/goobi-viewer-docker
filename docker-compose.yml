@@ -108,6 +108,7 @@ services:
       # SOLR_PATH: /solr
       # SOLR_CONTAINER: solr
       # SOLR_INCLUDES: "Require all denied"
+      # CUSTOM_CONFIG: "# custom apache config to be included"
     ports:
       - 80:80
     restart: unless-stopped
