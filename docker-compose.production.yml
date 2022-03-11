@@ -20,3 +20,13 @@ services:
       #     source: /opt/digiverso/additional_web_dir/
       #     target: /var/www/additional_web_dir/
       #     read_only: true
+      #
+      #
+      # Example configurtion for a multiline custom config snippet. Please note, that $ symbols
+      # need to be escaped by another $ symbol:
+      #
+      # CUSTOM_CONFIG: |
+      #   RedirectMatch /content/(.*)\$$ https://viewer.example.org/viewer/content/$$1
+      #   RewriteCond %{REQUEST_URI} ^/cms/ppnresolver/$$
+      #   RewriteCond %{QUERY_STRING} ^(.*)$$
+      #   RewriteRule ^(.*)$$ https://viewer.example.org/viewer/ppnresolver?id=%1 [R=302,L]
