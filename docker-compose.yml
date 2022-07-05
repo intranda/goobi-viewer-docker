@@ -41,6 +41,7 @@ services:
       DB_USER: ${DB_VIEWER_USER}
       DB_PASSWORD: ${DB_VIEWER_PASSWORD}
       VIEWER_DOMAIN: ${VIEWER_DOMAIN}
+      TOMCAT_SAMESITECOOKIES: ${TOMCAT_SAMESITECOOKIES}
       # DB_SERVER: viewer-db
       # DB_PORT: 3306
       # SOLR_URL: http://solr:8983/solr/collection1
