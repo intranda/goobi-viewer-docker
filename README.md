@@ -20,10 +20,10 @@ git clone https://github.com/intranda/goobi-viewer-docker.git
 
 ```bash
 sudo chown 8983:8983 ./data/solr
-docker-compose up -d viewer-db solr
-docker-compose exec solr solr zk upconfig -n goobiviewer -d /opt/goobiviewer
-docker-compose exec solr solr create -c collection1 -n goobiviewer
-docker-compose up -d
+docker compose up -d viewer-db solr
+docker compose exec solr solr zk upconfig -n goobiviewer -d /opt/goobiviewer
+docker compose exec solr solr create -c collection1 -n goobiviewer
+docker compose up -d
 ```
 
 ## Configuration
