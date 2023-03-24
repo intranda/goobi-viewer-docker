@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   solr:
-    image: intranda/goobi-viewer-docker-solr
+    image: ghcr.io/intranda/goobi-viewer-docker-solr
     volumes:
       - type: bind
         source: ${SOLR_DATA_DIR}
@@ -74,7 +74,7 @@ services:
     restart: unless-stopped
 
   indexer:
-    image: intranda/goobi-viewer-indexer
+    image: ghcr.io/intranda/goobi-viewer-indexer
     # environment:
     #   SOLR_URL:  http://solr:8983/solr/collection1
     #   VIEWER_URL: http://viewer:8080/viewer
@@ -91,7 +91,7 @@ services:
     environment:
       - TZ=${TZ}
   proxy:
-    image: intranda/goobi-viewer-docker-proxy
+    image: ghcr.io/intranda/goobi-viewer-docker-proxy
     environment:
       SERVERNAME: ${VIEWER_DOMAIN}
       TZ: ${TZ}
